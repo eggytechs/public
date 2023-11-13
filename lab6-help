@@ -6,22 +6,22 @@ ___lab6_task1(){
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
-    name: my-web-server-rs
+  name: my-web-server-rs
 spec:
-    replicas: 5
-    selector:
-        matchLabels:
-            app: rs-app
-    template:
-        metadata:
-            labels:
-                app: rs-app
-        spec:
-            containers:
-            -   name: nginx
-                image: nginx:1.15.1
-                ports:
-                - containerPort: 80
+  replicas: 5
+  selector:
+    matchLabels:
+      app: rs-app
+  template:
+    metadata:
+      labels:
+        app: rs-app
+      spec:
+        containers:
+        - name: nginx
+          image: nginx:1.15.1
+          ports:
+          - containerPort: 80
 EOF
 
   echo -e "Generate  $1"
@@ -33,22 +33,22 @@ ___lab6_task2(){
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: my-web-server-deploy
+  name: my-web-server-deploy
 spec:
-    replicas: 5
-    selector:
-        matchLabels:
-            app: deploy-app
-    template:
-        metadata:
-            labels:
-                app: deploy-app
-        spec:
-            containers:
-            -   name: nginx
-                image: nginx:1.15.1
-                ports:
-                - containerPort: 80
+  replicas: 5
+  selector:
+    matchLabels:
+      app: deploy-app
+  template:
+    metadata:
+      labels:
+        app: deploy-app
+      spec:
+        containers:
+        - name: nginx
+          image: nginx:1.15.1
+          ports:
+          - containerPort: 80
 EOF
 
   echo -e "Generate $1"
