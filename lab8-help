@@ -1,0 +1,39 @@
+#!/bin/bash
+
+___lab8_task3(){
+ cat << EOF   > $1
+apiVersion: v1
+kind: Service
+metadata:
+    labels:
+        app: hello-world
+    name: svc-canary
+spec:
+    type: ClusterIP
+    ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+        app: hello-world
+EOF
+
+  echo -e "Generate  $1"
+}
+
+__TASK_LIST="task3"
+__TASK_HELP="Usage: - lab8-help <task3>"
+if [[ $# -eq 0 ]] ; then
+      echo "$__TASK_HELP"
+      exit 1
+elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
+      if [[ $1 == "task3" ]]; then
+        ___lab8_task3 /home/student/svc-canary.yaml
+      else
+        echo "$__TASK_HELP"
+        exit 1
+      fi
+else
+    echo "$__TASK_HELP"
+    exit 1
+fi
