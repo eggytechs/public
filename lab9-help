@@ -1,6 +1,6 @@
 #!/bin/bash
 
-___lab_task3(){
+___lab9_task3(){
   cat << EOF > $1
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -31,8 +31,8 @@ if [[ $# -eq 0 ]] ; then
       echo "$__TASK_HELP"
       exit 1
 elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
-      if [[ $1 == "task2" ]]; then
-        ___lab_task2 /home/student/ingress_rules.yaml
+      if [[ $1 == "task3" ]]; then
+        ___lab9_task3 /home/student/ingress_rules.yaml
       else
         echo "$__TASK_HELP"
         exit 1
