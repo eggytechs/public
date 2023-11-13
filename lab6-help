@@ -2,7 +2,7 @@
 
 ___lab6_task1(){
 
-  cat << EOF | ssh $1 "cat > $2"
+  cat << EOF > $1
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata:
@@ -24,12 +24,12 @@ spec:
                 - containerPort: 80
 EOF
 
-  echo -e "Generate file in [ $1 ] - $2"
+  echo -e "Generate  $1"
 }
 
 ___lab6_task2(){
 
-  cat << EOF | ssh $1 "cat > $2"
+  cat << EOF  > $1
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -51,7 +51,7 @@ spec:
                 - containerPort: 80
 EOF
 
-  echo -e "Generate file in [ $1 ] - $2"
+  echo -e "Generate $1"
 }
 
 
@@ -63,9 +63,9 @@ if [[ $# -eq 0 ]] ; then
       exit 1
 elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
       if [[ $1 == "task1" ]]; then
-        ___lab6_task1 k8s-cp /home/student/my-web-server-rs.yaml
+        ___lab6_task1 /home/student/my-web-server-rs.yaml
       elif [[ $1 == "task2" ]]; then
-        ___lab6_task2 k8s-cp /home/student/my-web-server-deploy.yaml
+        ___lab6_task2 /home/student/my-web-server-deploy.yaml
       else
         echo "$__TASK_HELP"
         exit 1
