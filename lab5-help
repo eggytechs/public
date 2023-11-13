@@ -1,0 +1,58 @@
+#!/bin/bash
+
+___lab5_task2(){
+
+  cat << EOF > $1
+apiVersion: v1
+kind: Pod
+metadata:
+    name: my-web-server-declare
+    labels:
+        run: nginx
+spec:
+    containers:
+    -   name: nginx
+        image: nginx:1.15.2
+EOF
+
+  echo -e "Generate  $1"
+}
+
+___lab5_task3(){
+
+  cat << EOF > $1
+apiVersion: v1
+kind: Pod
+metadata:
+    name: multic-pod
+spec:
+    containers:
+    -   name: log-c1
+        image: busybox
+        args: [/bin/sh, -c,'while true; do echo "$(hostname) - $(date)"; sleep 1; done']
+    -   name: log-c2
+        image: busybox
+        args: [/bin/sh, -c, 'while true; do echo "$(hostname) - $(date)"; sleep 1; done']
+
+EOF
+
+  echo -e "Generate  $1"
+}
+__TASK_LIST="task2 task3"
+__TASK_HELP="Usage: - lab5-help <task2 | task3>"
+if [[ $# -eq 0 ]] ; then
+      echo "$__TASK_HELP"
+      exit 1
+elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
+      if [[ $1 == "task2" ]]; then
+        ___lab5_task2 /home/student/my-web-server-declare.yaml
+      elif [[ $1 == "task3" ]]; then
+        ___lab5_task3 /home/student/multic-pod.yaml
+      else
+        echo "$__TASK_HELP"
+        exit 1
+      fi 
+else
+    echo "$__TASK_HELP"
+    exit 1
+fi
