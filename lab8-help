@@ -5,17 +5,17 @@ ___lab8_task3(){
 apiVersion: v1
 kind: Service
 metadata:
-    labels:
-        app: hello-world
-    name: svc-canary
+  labels:
+    app: hello-world
+  name: svc-canary
 spec:
-    type: ClusterIP
-    ports:
-    - port: 80
-      protocol: TCP
-      targetPort: 80
-    selector:
-        app: hello-world
+  type: ClusterIP
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: hello-world
 EOF
 
   echo -e "Generate  $1"
