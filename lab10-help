@@ -6,19 +6,19 @@ ___lab10_task1(){
 apiVersion: v1
 kind: Pod
 metadata: 
-    name: stateless-pod
+  name: stateless-pod
 spec: 
-    containers: 
-    - name: busybox
-      image: busybox
-      command: [ "/bin/sh", "-c", "--" ]
-      args: [ "while true; do sleep 30; done;" ]
-      volumeMounts:
-      - name: my-temp-vol  
-        mountPath: /my-vol
-    volumes:
-    - name: my-temp-vol
-      emptyDir: {}
+  containers: 
+  - name: busybox
+    image: busybox
+    command: [ "/bin/sh", "-c", "--" ]
+    args: [ "while true; do sleep 30; done;" ]
+    volumeMounts:
+    - name: my-temp-vol  
+      mountPath: /my-vol
+  volumes:
+  - name: my-temp-vol
+    emptyDir: {}
 EOF
 
   echo -e "Generate  $1"
@@ -30,20 +30,20 @@ ___lab10_task2(){
 apiVersion: v1
 kind: Pod
 metadata: 
-    name: pod-with-hostpath
+  name: pod-with-hostpath
 spec: 
-    containers: 
-    - name: busybox
-      image: busybox
-      command: [ "/bin/sh", "-c", "--" ]
-      args: [ "while true; do sleep 30; done;" ]
-      volumeMounts:
-      - name: my-hostpath-vol  
-        mountPath: /my-vol
-    volumes:
-    - name: my-hostpath-vol
-      hostPath:
-        path: /home/student/myvol
+  containers: 
+  - name: busybox
+    image: busybox
+    command: [ "/bin/sh", "-c", "--" ]
+    args: [ "while true; do sleep 30; done;" ]
+    volumeMounts:
+    - name: my-hostpath-vol  
+      mountPath: /my-vol
+  volumes:
+  - name: my-hostpath-vol
+    hostPath:
+      path: /home/student/myvol
 EOF
 
   echo -e "Generate $1"
