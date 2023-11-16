@@ -1,0 +1,63 @@
+#!/bin/bash
+
+___lab11_task1(){
+  cat << EOF > $1
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: perl
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+    restartPolicy: Never
+  backoffLimit: 4
+EOF
+  echo -e "Generate $1"
+}
+
+___lab11_task2(){
+  cat << EOF > $1
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: demo-cronjob
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: welcome-msg
+            image: busybox
+            command:
+            - /bin/sh
+            - -c
+            - date; echo "Welcome to K8S Cluster! 😄"
+          restartPolicy: OnFailure
+EOF
+  echo -e "Generate $1"
+}
+
+__TASK_LIST="task1 task2"
+__TASK_HELP="Usage: - lab11-help <task1 | task2>"
+if [[ $# -eq 0 ]] ; then
+      echo "$__TASK_HELP"
+      exit 1
+elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
+      if [[ $1 == "task1" ]]; then
+        ___lab11_task1 /home/student/pi-job.yaml
+      elif [[ $1 == "task2" ]]; then
+        ___lab11_task2 /home/student/welcome-msg-cronjob.yaml
+      else
+        echo "$__TASK_HELP"
+        exit 1
+      fi 
+else
+    echo "$__TASK_HELP"
+    exit 1
+fi
