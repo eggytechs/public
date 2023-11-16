@@ -1,0 +1,71 @@
+#!/bin/bash
+
+___lab10_task1(){
+
+  cat << EOF > $1
+apiVersion: v1
+kind: Pod
+metadata: 
+    name: stateless-pod
+spec: 
+    containers: 
+    - name: busybox
+      image: busybox
+      command: [ "/bin/sh", "-c", "--" ]
+      args: [ "while true; do sleep 30; done;" ]
+      volumeMounts:
+      - name: my-temp-vol  
+        mountPath: /my-vol
+    volumes:
+    - name: my-temp-vol
+      emptyDir: {}
+EOF
+
+  echo -e "Generate  $1"
+}
+
+___lab10_task2(){
+
+  cat << EOF  > $1
+apiVersion: v1
+kind: Pod
+metadata: 
+    name: pod-with-hostpath
+spec: 
+    containers: 
+    - name: busybox
+      image: busybox
+      command: [ "/bin/sh", "-c", "--" ]
+      args: [ "while true; do sleep 30; done;" ]
+      volumeMounts:
+      - name: my-hostpath-vol  
+        mountPath: /my-vol
+    volumes:
+    - name: my-hostpath-vol
+      hostPath:
+        path: /home/student/myvol
+EOF
+
+  echo -e "Generate $1"
+}
+
+
+
+__TASK_LIST="task1 task2"
+__TASK_HELP="Usage: - lab10-help <task1 | task2>"
+if [[ $# -eq 0 ]] ; then
+      echo "$__TASK_HELP"
+      exit 1
+elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
+      if [[ $1 == "task1" ]]; then
+        ___lab10_task1 /home/student/stateless-pod.yaml
+      elif [[ $1 == "task2" ]]; then
+        ___lab10_task2 /home/student/pod-with-hostpath.yaml
+      else
+        echo "$__TASK_HELP"
+        exit 1
+      fi 
+else
+    echo "$__TASK_HELP"
+    exit 1
+fi
