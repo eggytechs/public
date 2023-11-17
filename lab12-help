@@ -1,6 +1,6 @@
 #!/bin/bash
 
-___lab11_task1(){
+___lab12_task1(){
 
   cat << EOF > $1
 apiVersion: v1
@@ -93,8 +93,8 @@ EOF
   echo -e "Generate $1"
 }
 
-__TASK_LIST="task1 task2"
-__TASK_HELP="Usage: - lab10-help <task1 | task2>"
+__TASK_LIST="task1 task2 task3"
+__TASK_HELP="Usage: - lab12-help <task1 | task2 | task3>"
 if [[ $# -eq 0 ]] ; then
       echo "$__TASK_HELP"
       exit 1
