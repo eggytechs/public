@@ -24,7 +24,7 @@ ___lab11_task2(){
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: demo-cronjob
+  name: welcome-msg-cj
 spec:
   schedule: "*/1 * * * *"
   jobTemplate:
@@ -52,7 +52,7 @@ elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
       if [[ $1 == "task1" ]]; then
         ___lab11_task1 /home/student/pi-job.yaml
       elif [[ $1 == "task2" ]]; then
-        ___lab11_task2 /home/student/welcome-msg-cronjob.yaml
+        ___lab11_task2 /home/student/welcome-msg-cj.yaml
       else
         echo "$__TASK_HELP"
         exit 1
