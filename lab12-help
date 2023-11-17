@@ -33,7 +33,7 @@ EOF
 ___lab12_task3(){
 
   cat << EOF  > $1
-apiVersion: apps/v1
+apiVersion: v1
 kind: Pod
 metadata:
   name: pod-with-readiness-probe
