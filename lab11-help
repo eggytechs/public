@@ -13,7 +13,7 @@ spec:
       - name: pi
         image: perl
         command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
-    restartPolicy: Never
+  restartPolicy: Never
   backoffLimit: 4
 EOF
   echo -e "Generate $1"
@@ -38,7 +38,7 @@ spec:
             - /bin/sh
             - -c
             - date; echo "Welcome to K8S Cluster! 😄"
-          restartPolicy: OnFailure
+       restartPolicy: OnFailure
 EOF
   echo -e "Generate $1"
 }
