@@ -1,0 +1,115 @@
+#!/bin/bash
+
+___lab11_task1(){
+
+  cat << EOF > $1
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-with-liveness-probe
+  labels:
+    app: pod-with-liveness-probe
+spec:
+  containers:
+  - name: busybox
+    image: busybox
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy; sleep infinity
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5
+
+EOF
+
+  echo -e "Generate  $1"
+}
+
+___lab12_task3(){
+
+  cat << EOF  > $1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-with-readiness-probe
+  labels:
+    app: deploy-with-readiness-probe
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: probe-test-app
+  strategy: 
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: probe-test-app
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        args:
+        - /bin/sh
+        - -c
+        - touch /tmp/healthy; sleep infinity
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/healthy
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+EOF
+
+  echo -e "Generate $1"
+}
+___lab12_task2(){
+
+  cat << EOF  > $1
+apiVersion: v1
+kind: Service
+metadata:
+  name: probe-svc
+  labels:
+    app: probe-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: probe-test-app
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+
+EOF
+
+  echo -e "Generate $1"
+}
+
+__TASK_LIST="task1 task2"
+__TASK_HELP="Usage: - lab10-help <task1 | task2>"
+if [[ $# -eq 0 ]] ; then
+      echo "$__TASK_HELP"
+      exit 1
+elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
+      if [[ $1 == "task1" ]]; then
+        ___lab12_task1 /home/student/pod-with-liveness-probe.yaml
+      elif [[ $1 == "task2" ]]; then
+        ___lab12_task2 /home/student/probe-svc.yaml
+      elif [[ $1 == "task3" ]]; then
+        ___lab12_task3 /home/student/deploy-with-readiness-probe.yaml
+      else
+        echo "$__TASK_HELP"
+        exit 1
+      fi 
+else
+    echo "$__TASK_HELP"
+    exit 1
+fi
