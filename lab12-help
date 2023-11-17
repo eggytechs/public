@@ -34,37 +34,26 @@ ___lab12_task3(){
 
   cat << EOF  > $1
 apiVersion: apps/v1
-kind: Deployment
+kind: Pod
 metadata:
-  name: deploy-with-readiness-probe
+  name: pod-with-readiness-probe
   labels:
-    app: deploy-with-readiness-probe
+    app: probe-test-app
 spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: probe-test-app
-  strategy: 
-    type: RollingUpdate
-  template:
-    metadata:
-      labels:
-        app: probe-test-app
-    spec:
-      containers:
-      - name: busybox
-        image: busybox
-        args:
-        - /bin/sh
-        - -c
-        - touch /tmp/healthy; sleep infinity
-        readinessProbe:
-          exec:
-            command:
-            - cat
-            - /tmp/healthy
-          initialDelaySeconds: 5
-          periodSeconds: 5
+  containers:
+  - name: busybox
+    image: busybox
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy; sleep infinity
+    readinessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5
 
 EOF
 
@@ -104,7 +93,7 @@ elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
       elif [[ $1 == "task2" ]]; then
         ___lab12_task2 /home/student/probe-svc.yaml
       elif [[ $1 == "task3" ]]; then
-        ___lab12_task3 /home/student/deploy-with-readiness-probe.yaml
+        ___lab12_task3 /home/student/pod-with-readiness-probe.yaml
       else
         echo "$__TASK_HELP"
         exit 1
