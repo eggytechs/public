@@ -4,7 +4,7 @@ ___generate_setup_script(){
 cat << EOF1 | ssh $1 "cat > /home/student/k8s-install.sh"
 
 __MINOR_VER=1.28
-__VER=1.28.3
+__VER=1.28.4
 __MY_K8S_SETUP_DIR="/opt/k8s-setup"
 
 _____k8s_initial_setup() {
@@ -44,7 +44,7 @@ EOF
 
   # Step 9 - Add repo for Kubernetes
   curl -fsSL https://pkgs.k8s.io/core:/stable:/v\$__MINOR_VER/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v\$__MINOR_VER/deb/ /" >>/etc/apt/sources.list.d/kubernetes.list
+  echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v\$__MINOR_VER/deb/ /" >> /etc/apt/sources.list.d/kubernetes.list
 
   # Step 10 - Install the Kubernetes software, and lock the version
   apt-get update
@@ -75,7 +75,7 @@ ___generate_init_config(){
 cat << EOF | ssh $1 "cat > /home/student/kubeadm-config.yaml"
 apiVersion: kubeadm.k8s.io/v1beta3
 kind: ClusterConfiguration
-kubernetesVersion: 1.28.3 
+kubernetesVersion: 1.28.4
 controlPlaneEndpoint: "k8s-cp:6443" 
 networking:
     podSubnet: 192.168.0.0/16
