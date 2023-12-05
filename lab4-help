@@ -39,7 +39,8 @@ EOF
   # Step 8 - Install containerd software
   apt-get update && apt-get install containerd.io -y
   containerd config default | tee /etc/containerd/config.toml
-  sed -e "s/SystemdCgroup = false/SystemdCgroup = true/g" -i /etc/containerd/config.toml
+  #sed -e "s/SystemdCgroup = false/SystemdCgroup = true/g" -i /etc/containerd/config.toml
+sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
   systemctl restart containerd
 
   # Step 9 - Add repo for Kubernetes
