@@ -2,7 +2,7 @@
 
 ___lab_task2(){
   cat << EOF > $1
-FROM alpine:latest
+FROM alpine:3.15
 WORKDIR / 
 
 RUN apk add --no-cache py3-pip
