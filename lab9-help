@@ -1,38 +1,35 @@
 #!/bin/bash
 
-___lab9_task3(){
+___lab9_task4(){
   cat << EOF > $1
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-test
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-  namespace: default
+  name: my-ingress
 spec:
+  ingressClassName: nginx
   rules:
   - http:
       paths:
-      - path: / 
-        pathType: Prefix
-        backend:
+      - backend:
           service:
-            name: web-one
+            name: my-test-app-svc
             port:
               number: 80
+        path: /
+        pathType: Prefix
 
 EOF
   echo -e "Generate $1"
 }
-__TASK_LIST="task3"
-__TASK_HELP="Usage: - lab9-help <task3>"
+__TASK_LIST="task4"
+__TASK_HELP="Usage: - lab9-help <task4>"
 if [[ $# -eq 0 ]] ; then
       echo "$__TASK_HELP"
       exit 1
 elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
-      if [[ $1 == "task3" ]]; then
-        ___lab9_task3 /home/student/ingress_rules.yaml
+      if [[ $1 == "task4" ]]; then
+        ___lab9_task4 /home/student/ingress_rules.yaml
       else
         echo "$__TASK_HELP"
         exit 1
