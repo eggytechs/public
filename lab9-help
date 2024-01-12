@@ -29,7 +29,7 @@ if [[ $# -eq 0 ]] ; then
       exit 1
 elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
       if [[ $1 == "task4" ]]; then
-        ___lab9_task4 /home/student/ingress_rules.yaml
+        ___lab9_task4 /home/student/my-ingress.yaml
       else
         echo "$__TASK_HELP"
         exit 1
