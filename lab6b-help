@@ -1,0 +1,48 @@
+#!/bin/bash
+
+___lab6b_task2(){
+
+  cat << EOF  > $1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-deploy
+  labels:
+    app: apache-deploy
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: apache-deploy
+  template:
+    metadata:
+      labels:
+        app: apache-deploy
+    spec:
+      containers:
+      - name: httpd
+        image: httpd:2.4
+
+EOF
+
+  echo -e "Generate $1"
+}
+
+
+
+__TASK_LIST="task2"
+__TASK_HELP="Usage: - lab6b-help <task2>"
+if [[ $# -eq 0 ]] ; then
+      echo "$__TASK_HELP"
+      exit 1
+elif [[ "$__TASK_LIST" =~ (^|[[:space:]])"$1"($|[[:space:]]) ]]; then
+      if [[ $1 == "task2" ]]; then
+        ___lab6b_task2 /home/student/apache-deploy.yaml
+      else
+        echo "$__TASK_HELP"
+        exit 1
+      fi 
+else
+    echo "$__TASK_HELP"
+    exit 1
+fi
